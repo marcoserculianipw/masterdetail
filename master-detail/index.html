@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Detail | Estética Automotiva em São José dos Campos</title>
+  
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              lime: '#84cc16',       /* Verde oficial da Master Detail */
+              limeHover: '#65a30d',
+              dark: '#090a09',
+              surface: '#121512',
+              card: '#161a16'
+            }
+          },
+          boxShadow: {
+            'glow-lime': '0 0 35px -5px rgba(132, 204, 22, 0.3)',
+            'glow-card': '0 10px 40px -10px rgba(0, 0, 0, 0.7)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+
+ 
+  <script src="script.js" defer></script>
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-brand-lime selection:text-black overflow-x-hidden">
+
+  <!-- ================= TOPBAR INFORMATIVA ================= -->
+  <div class="bg-zinc-950/90 border-b border-zinc-800/80 text-xs text-zinc-400 py-2.5 px-4 sm:px-6 hidden sm:block">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-6">
+        <span class="flex items-center gap-1.5 hover:text-zinc-200 transition-colors">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-lime"></i> R. Odete García, 1211 - Cidade Morumbi, SJC
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-brand-lime animate-ping"></span>
+          Aberto · Fecha às 18:00
+        </span>
+      </div>
+      <div class="flex items-center gap-5">
+        <a href="#avaliacoes" class="flex items-center gap-1.5 text-white font-medium hover:text-brand-lime transition-colors">
+          <span class="flex text-amber-400">★★★★★</span>
+          <span class="font-bold">4.9/5.0</span>
+          <span class="text-zinc-500">(60 avaliações no Google)</span>
+        </a>
+        <a href="https://www.instagram.com/masterdetailesteticaautomotiva/" target="_blank" class="hover:text-brand-lime flex items-center gap-1 transition-colors">
+          <i data-lucide="instagram" class="w-3.5 h-3.5"></i> @masterdetail_sjc
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="sticky top-0 bg-zinc-950/85 backdrop-blur-xl border-b border-zinc-800/80 z-40 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      
+      <a href="#" class="flex flex-col group">
+        <div class="flex items-center gap-1">
+          <span class="text-2xl font-black italic tracking-tighter text-white uppercase group-hover:text-zinc-200 transition-colors">
+            MASTER <span class="text-brand-lime drop-shadow-[0_0_12px_rgba(132,204,22,0.4)]">DETAIL</span>
+          </span>
+        </div>
+        <span class="text-[9px] tracking-widest uppercase text-zinc-400 font-semibold -mt-1 group-hover:text-brand-lime transition-colors">
+          A diferença está nos detalhes
+        </span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-zinc-300">
+        <a href="#projetos" class="hover:text-brand-lime transition-colors">Portfólio</a>
+        <a href="#servicos" class="hover:text-brand-lime transition-colors">Serviços</a>
+        <a href="#avaliacoes" class="hover:text-brand-lime transition-colors">Avaliações (4.9★)</a>
+        <a href="#localizacao" class="hover:text-brand-lime transition-colors">Localização</a>
+      </div>
+
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="https://wa.me/5512981479693?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20na%20Master%20Detail" target="_blank"
+           class="bg-brand-lime hover:bg-brand-limeHover text-zinc-950 font-black px-6 py-2.5 rounded-xl text-sm transition-all duration-300 transform hover:-translate-y-0.5 shadow-glow-lime flex items-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> Agendar Horário
+        </a>
+      </div>
+
+      <button id="mobileMenuBtn" aria-label="Abrir Menu" class="md:hidden p-2 text-zinc-400 hover:text-white focus:outline-none">
+        <i data-lucide="menu" id="menuIcon" class="w-7 h-7"></i>
+      </button>
+    </div>
+
+    <!-- Gaveta Menu Mobile -->
+    <div id="mobileMenu" class="hidden md:hidden bg-zinc-950/98 border-b border-zinc-800 px-6 py-6 transition-all">
+      <div class="flex flex-col gap-4 font-semibold text-zinc-300">
+        <a href="#projetos" class="mobile-link py-2 border-b border-zinc-900 hover:text-brand-lime">Portfólio</a>
+        <a href="#servicos" class="mobile-link py-2 border-b border-zinc-900 hover:text-brand-lime">Serviços</a>
+        <a href="#avaliacoes" class="mobile-link py-2 border-b border-zinc-900 hover:text-brand-lime">Avaliações Google</a>
+        <a href="#localizacao" class="mobile-link py-2 border-b border-zinc-900 hover:text-brand-lime">Localização & Contato</a>
+        <a href="https://wa.me/5512981479693" target="_blank" class="mt-2 bg-brand-lime text-zinc-950 font-bold py-3 text-center rounded-xl flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> Chamar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+  <section class="relative min-h-[92vh] flex items-center justify-center overflow-hidden py-24 md:py-32">
+    
+    <!-- VÍDEO DE FUNDO -->
+    <div class="absolute inset-0 w-full h-full -z-20 overflow-hidden">
+      <video 
+        id="heroVideo"
+        autoplay 
+        loop 
+        muted 
+        defaultMuted
+        playsinline 
+        preload="auto"
+        class="w-full h-full object-cover object-center scale-105 filter brightness-[0.45] contrast-110 pointer-events-none">
+        <source src="assets/videos/hero-bg.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos em HTML5.
+      </video>
+    </div>
+
+    <!-- GRADIENTES DE CONTRASTE -->
+    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/40 to-zinc-950 -z-10"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-brand-lime/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+      
+      <div class="inline-flex items-center gap-2 py-1.5 px-4 mb-6 rounded-full bg-zinc-900/80 border border-brand-lime/40 text-brand-lime text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-glow-lime">
+        <span class="w-2 h-2 rounded-full bg-brand-lime animate-ping"></span>
+        Centro de Detalhamento Automotivo & PPF
+      </div>
+      
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-white uppercase tracking-tight leading-[1.08] drop-shadow-2xl">
+        A Diferença Está <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-lime via-lime-300 to-emerald-400">
+          Nos Detalhes.
+        </span>
+      </h1>
+      
+      <p class="mt-6 text-base sm:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+        Proteção definitiva com <strong class="text-white">PPF</strong>, vitrificação cerâmica 9H e polimento técnico avançado. Traga o brilho de concessionária de volta ao seu carro.
+      </p>
+
+      <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="https://wa.me/5512981479693?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20na%20Master%20Detail" target="_blank" 
+           class="w-full sm:w-auto bg-brand-lime hover:bg-brand-limeHover text-zinc-950 font-black px-8 py-4 rounded-xl shadow-glow-lime transition-all duration-300 transform hover:-translate-y-1 text-center uppercase tracking-wide flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" class="w-5 h-5"></i> Orçamento no WhatsApp
+        </a>
+        <a href="#projetos" 
+           class="w-full sm:w-auto border border-zinc-700 hover:border-brand-lime bg-zinc-900/70 backdrop-blur-md text-zinc-200 font-bold px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 text-center uppercase tracking-wide">
+          Conhecer Projetos
+        </a>
+      </div>
+
+      <div class="mt-10 inline-flex items-center gap-2 bg-zinc-950/70 backdrop-blur-md border border-zinc-800 px-4 py-2 rounded-full">
+        <div class="flex text-amber-400 text-xs">★★★★★</div>
+        <span class="text-white font-bold text-xs">4.9 no Google</span>
+        <span class="text-zinc-500 text-xs">(60 avaliações)</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CARROSSEL DE FOTOS ================= -->
+  <section id="projetos" class="py-20 bg-zinc-900/30 border-y border-zinc-800 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
+        <div>
+          <span class="text-brand-lime font-bold uppercase tracking-widest text-xs flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-lime"></span> Nossos Projetos Reais
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-black text-white uppercase mt-1">Galeria em Alta Resolução</h2>
+          <p class="text-zinc-400 text-xs sm:text-sm mt-1">Deslize para navegar ou clique em qualquer foto para ampliar em tela cheia.</p>
+        </div>
+
+        <div class="flex gap-2 self-end sm:self-auto">
+          <button id="prevBtn" aria-label="Anterior" class="p-3 bg-zinc-800 hover:bg-brand-lime hover:text-black rounded-xl border border-zinc-700 transition-all duration-200 active:scale-95 shadow-md">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <button id="nextBtn" aria-label="Próximo" class="p-3 bg-zinc-800 hover:bg-brand-lime hover:text-black rounded-xl border border-zinc-700 transition-all duration-200 active:scale-95 shadow-md">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Trilho do Carrossel com Arraste -->
+      <div id="carouselTrack" class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-4 cursor-grab active:cursor-grabbing select-none">
+        
+        <!-- CARD 1: Audi TT -->
+        <div class="gallery-card shrink-0 w-[290px] sm:w-[360px] md:w-[410px] snap-start bg-zinc-900/90 rounded-2xl overflow-hidden border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 group shadow-glow-card"
+             data-index="0"
+             data-full-img="assets/images/audi-tt.png"
+             data-title="Audi TT Coupé - Polimento Técnico & Proteção Cerâmica"
+             data-desc="Eliminação completa de microrriscos e marcas circulares. Aplicação de revestimento cerâmico para brilho espelhado extremo.">
+          <div class="overflow-hidden aspect-[4/3] relative">
+            <img src="assets/images/audi-tt.png" alt="Audi TT Master Detail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
+            <span class="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-md text-brand-lime border border-brand-lime/30 px-3 py-1 rounded-full font-bold text-xs">
+              Polimento Técnico
+            </span>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="bg-brand-lime text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Entrar na Foto
+              </span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg text-white group-hover:text-brand-lime transition-colors">Audi TT Coupé Esportivo</h3>
+            <p class="text-zinc-400 text-xs mt-1 leading-relaxed">Nivelamento microscópico sob nossa iluminação hexagonal calibrada.</p>
+          </div>
+        </div>
+
+        <!-- CARD 2: Mercedes-AMG CLA -->
+        <div class="gallery-card shrink-0 w-[290px] sm:w-[360px] md:w-[410px] snap-start bg-zinc-900/90 rounded-2xl overflow-hidden border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 group shadow-glow-card"
+             data-index="1"
+             data-full-img="assets/images/mercedes-amg.png"
+             data-title="Mercedes-AMG CLA - Aplicação de PPF Frontal & Acetinado"
+             data-desc="Película de proteção contra impacto de pedriscos de rodovia, riscos de lavagem e insetos, mantendo o acabamento fosco/acetinado impecável.">
+          <div class="overflow-hidden aspect-[4/3] relative">
+            <img src="assets/images/mercedes-amg.png" alt="Mercedes AMG Master Detail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
+            <span class="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-md text-brand-lime border border-brand-lime/30 px-3 py-1 rounded-full font-bold text-xs">
+              PPF Paint Protection
+            </span>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="bg-brand-lime text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Entrar na Foto
+              </span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg text-white group-hover:text-brand-lime transition-colors">Mercedes-AMG CLA</h3>
+            <p class="text-zinc-400 text-xs mt-1 leading-relaxed">Blindagem invisível auto-regenerativa contra lascas e arranhões.</p>
+          </div>
+        </div>
+
+        <!-- CARD 3: Box de Lavagem & Elevador -->
+        <div class="gallery-card shrink-0 w-[290px] sm:w-[360px] md:w-[410px] snap-start bg-zinc-900/90 rounded-2xl overflow-hidden border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 group shadow-glow-card"
+             data-index="2"
+             data-full-img="assets/images/fachada-lavagem.png"
+             data-title="Estrutura Master Detail - Box de Lavagem Técnica & Elevador"
+             data-desc="Elevador pantográfico para lavagem detalhada de caixas de roda, remoção de fuligem ferrosa de freios e proteção de chassi.">
+          <div class="overflow-hidden aspect-[4/3] relative">
+            <img src="assets/images/fachada-lavagem.png" alt="Oficina Master Detail SJC" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
+            <span class="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-md text-brand-lime border border-brand-lime/30 px-3 py-1 rounded-full font-bold text-xs">
+              Infraestrutura
+            </span>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="bg-brand-lime text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Entrar na Foto
+              </span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg text-white group-hover:text-brand-lime transition-colors">Box de Elevação & Lavagem</h3>
+            <p class="text-zinc-400 text-xs mt-1 leading-relaxed">Acesso total às partes inferiores para descontaminação profunda.</p>
+          </div>
+        </div>
+
+        <!-- CARD 4: SUV Branco (Tracker) -->
+        <div class="gallery-card shrink-0 w-[290px] sm:w-[360px] md:w-[410px] snap-start bg-zinc-900/90 rounded-2xl overflow-hidden border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 group shadow-glow-card"
+             data-index="3"
+             data-full-img="assets/images/suv-tracker.png"
+             data-title="SUV - Vitrificação Cerâmica Fireball Flash"
+             data-desc="Proteção contra raios UV, fezes ácidas de pássaros e hidrorepelência total que facilita as lavagens posteriores.">
+          <div class="overflow-hidden aspect-[4/3] relative">
+            <img src="assets/images/suv-tracker.png" alt="SUV Master Detail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
+            <span class="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-md text-brand-lime border border-brand-lime/30 px-3 py-1 rounded-full font-bold text-xs">
+              Vitrificação Cerâmica
+            </span>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="bg-brand-lime text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Entrar na Foto
+              </span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg text-white group-hover:text-brand-lime transition-colors">SUV Premium Brilho Vítreo</h3>
+            <p class="text-zinc-400 text-xs mt-1 leading-relaxed">Verniz selado com tecnologia de nanopartículas de sílica.</p>
+          </div>
+        </div>
+
+        <!-- CARD 5: Estúdio com LEDs Hexagonais -->
+        <div class="gallery-card shrink-0 w-[290px] sm:w-[360px] md:w-[410px] snap-start bg-zinc-900/90 rounded-2xl overflow-hidden border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 group shadow-glow-card"
+             data-index="4"
+             data-full-img="assets/images/estudio-led.webp"
+             data-title="Estúdio Detailing - Iluminação de Inspeção & Piso Modular"
+             data-desc="Ambiente limpo, livre de poeira e com lâmpadas hexagonais calibradas na temperatura correta para revelar qualquer defeito na pintura.">
+          <div class="overflow-hidden aspect-[4/3] relative">
+            <img src="assets/images/estudio-led.webp" alt="Estúdio Detailing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
+            <span class="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-md text-brand-lime border border-brand-lime/30 px-3 py-1 rounded-full font-bold text-xs">
+              Ambiente de Precisão
+            </span>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="bg-brand-lime text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Entrar na Foto
+              </span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg text-white group-hover:text-brand-lime transition-colors">Iluminação de Alta Fidelidade</h3>
+            <p class="text-zinc-400 text-xs mt-1 leading-relaxed">Onde nenhum detalhe ou holografia passa despercebido.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVIÇOS TÉCNICOS ================= -->
+  <section id="servicos" class="py-24 max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16">
+      <span class="text-brand-lime font-bold uppercase tracking-widest text-xs">Excelência em Cada Etapa</span>
+      <h2 class="text-3xl sm:text-5xl font-black text-white mt-2 uppercase">Nossos Serviços</h2>
+      <p class="text-zinc-400 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
+        Técnicas consolidadas e produtos homologados para preservar o valor do seu veículo.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 transform hover:-translate-y-1.5 group shadow-lg">
+        <div class="w-14 h-14 bg-brand-lime/10 text-brand-lime rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-lime group-hover:text-black transition-colors duration-300">
+          <i data-lucide="shield-check" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-lime transition-colors">Aplicação de PPF</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">
+          Película transparente ultra-resistente contra batidas de pedra, riscos de chave e marcas de rodovia em áreas vulneráveis.
+        </p>
+      </div>
+
+      <div class="bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 transform hover:-translate-y-1.5 group shadow-lg">
+        <div class="w-14 h-14 bg-brand-lime/10 text-brand-lime rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-lime group-hover:text-black transition-colors duration-300">
+          <i data-lucide="sparkles" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-lime transition-colors">Vitrificação Cerâmica</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">
+          Camada cerâmica de alto poder hidrofóbico. Proteção UV contra desbotamento de cor e brilho espelhado que repele sujeira.
+        </p>
+      </div>
+
+      <div class="bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 transform hover:-translate-y-1.5 group shadow-lg">
+        <div class="w-14 h-14 bg-brand-lime/10 text-brand-lime rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-lime group-hover:text-black transition-colors duration-300">
+          <i data-lucide="disc" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-lime transition-colors">Polimento Técnico</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">
+          Nivelamento milimétrico do verniz, removendo hologramas e microrriscos de lavagens anteriores com acabamento liso e uniforme.
+        </p>
+      </div>
+
+      <div class="bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 transform hover:-translate-y-1.5 group shadow-lg">
+        <div class="w-14 h-14 bg-brand-lime/10 text-brand-lime rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-lime group-hover:text-black transition-colors duration-300">
+          <i data-lucide="armchair" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-lime transition-colors">Higienização de Interiores & Couro</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">
+          Limpeza térmica de estofados, aspiração detalhada, hidratação profunda de couro e aromatização técnica do habitáculo.
+        </p>
+      </div>
+
+      <div class="bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 transform hover:-translate-y-1.5 group shadow-lg">
+        <div class="w-14 h-14 bg-brand-lime/10 text-brand-lime rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-lime group-hover:text-black transition-colors duration-300">
+          <i data-lucide="cpu" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-lime transition-colors">Detalhamento de Motor</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">
+          Desengraxe seguro e aplicação de verniz protetor anti-ressecamento nas mangueiras e conectores do cofre do motor.
+        </p>
+      </div>
+
+      <div class="bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 hover:border-brand-lime transition-all duration-300 transform hover:-translate-y-1.5 group shadow-lg">
+        <div class="w-14 h-14 bg-brand-lime/10 text-brand-lime rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-lime group-hover:text-black transition-colors duration-300">
+          <i data-lucide="sun" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-lime transition-colors">Polimento de Farol & Enceramento</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">
+          Restauração óptica de faróis amarelados e enceramento nobre com ceras de alta hidrorepelência.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AVALIAÇÕES GOOGLE ================= -->
+  <section id="avaliacoes" class="py-20 bg-zinc-900/40 border-y border-zinc-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+        <div>
+          <span class="text-brand-lime font-bold uppercase tracking-widest text-xs flex items-center gap-1.5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-brand-lime"></i> Opiniões Reais
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mt-1">4.9 Estrelas no Google</h2>
+          <p class="text-zinc-400 text-sm mt-1">Depoimentos verificados de clientes atendidos na nossa unidade em SJC.</p>
+        </div>
+
+        <div class="bg-zinc-950 p-4 sm:p-5 rounded-2xl border border-zinc-800 flex items-center gap-4">
+          <div class="text-4xl font-black text-white">4.9</div>
+          <div>
+            <div class="flex text-amber-400 text-sm">★★★★★</div>
+            <p class="text-xs text-zinc-400 mt-0.5">Nota média com mais de 60 avaliações</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-zinc-950/80 p-6 rounded-2xl border border-zinc-800/80 hover:border-brand-lime/50 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 text-sm mb-3">★★★★★</div>
+            <p class="text-zinc-300 text-sm italic leading-relaxed">
+              "… Atendimento impecável. Super recomendo! Fiz martelinho de ouro, polimento técnico e PPF no capô. Excelente resultado e entrega no prazo!"
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-brand-lime/10 text-brand-lime border border-brand-lime/20 flex items-center justify-center font-bold text-xs">C</div>
+            <div>
+              <h4 class="text-white text-xs font-bold">Cliente Google</h4>
+              <span class="text-zinc-500 text-[11px]">Avaliação Verificada</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-zinc-950/80 p-6 rounded-2xl border border-zinc-800/80 hover:border-brand-lime/50 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 text-sm mb-3">★★★★★</div>
+            <p class="text-zinc-300 text-sm italic leading-relaxed">
+              "Fizeram um ótimo trabalho no meu carro. A pintura voltou a ter vida e o interior ficou com cheiro e aspecto de novo."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-brand-lime/10 text-brand-lime border border-brand-lime/20 flex items-center justify-center font-bold text-xs">M</div>
+            <div>
+              <h4 class="text-white text-xs font-bold">Cliente Google</h4>
+              <span class="text-zinc-500 text-[11px]">Avaliação Verificada</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-zinc-950/80 p-6 rounded-2xl border border-zinc-800/80 hover:border-brand-lime/50 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 text-sm mb-3">★★★★★</div>
+            <p class="text-zinc-300 text-sm italic leading-relaxed">
+              "O nível de cuidado e capricho superou minhas expectativas. Dá para ver que entendem muito do que fazem em cada detalhe."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-brand-lime/10 text-brand-lime border border-brand-lime/20 flex items-center justify-center font-bold text-xs">R</div>
+            <div>
+              <h4 class="text-white text-xs font-bold">Cliente Google</h4>
+              <span class="text-zinc-500 text-[11px]">Avaliação Verificada</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOCALIZAÇÃO ================= -->
+  <section id="localizacao" class="py-20 max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 border border-zinc-800/80 rounded-3xl p-6 sm:p-12 shadow-2xl relative overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <div class="lg:col-span-7">
+          <span class="text-brand-lime font-bold uppercase tracking-widest text-xs">Agendamento & Visita</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mt-2">Visite o Nosso Estúdio</h2>
+          <p class="text-zinc-400 text-sm sm:text-base mt-3 leading-relaxed">
+            Estamos localizados no Cidade Morumbi, em São José dos Campos. Realizamos uma avaliação técnica do estado do seu veículo para indicar a melhor solução.
+          </p>
+
+          <div class="mt-8 space-y-4 text-sm">
+            <div class="flex items-start gap-3.5">
+              <div class="w-8 h-8 rounded-lg bg-brand-lime/10 flex items-center justify-center text-brand-lime shrink-0">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+              </div>
+              <span class="text-zinc-300 pt-1">R. Odete García, 1211 - Cidade Morumbi, São José dos Campos - SP, 12236-430</span>
+            </div>
+
+            <div class="flex items-center gap-3.5">
+              <div class="w-8 h-8 rounded-lg bg-brand-lime/10 flex items-center justify-center text-brand-lime shrink-0">
+                <i data-lucide="phone-call" class="w-4 h-4"></i>
+              </div>
+              <span class="text-zinc-300">(12) 98147-9693 &nbsp;|&nbsp; (12) 99176-7844</span>
+            </div>
+
+            <div class="flex items-center gap-3.5">
+              <div class="w-8 h-8 rounded-lg bg-brand-lime/10 flex items-center justify-center text-brand-lime shrink-0">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+              </div>
+              <span class="text-zinc-300">Segunda a Sábado · Até 18:00 (Com agendamento prévio)</span>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="https://maps.google.com/?q=R.+Odete+García,+1211+-+Cidade+Morumbi,+São+José+dos+Campos+-+SP" target="_blank"
+               class="bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-6 py-3.5 rounded-xl text-sm flex items-center gap-2 transition-all duration-200">
+              <i data-lucide="navigation" class="w-4 h-4 text-brand-lime"></i> Abrir Rota no Maps
+            </a>
+            <a href="https://wa.me/5512981479693" target="_blank"
+               class="bg-brand-lime hover:bg-brand-limeHover text-black font-extrabold px-6 py-3.5 rounded-xl text-sm flex items-center gap-2 transition-all duration-200 shadow-glow-lime">
+              <i data-lucide="message-square" class="w-4 h-4"></i> Iniciar Conversa
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-zinc-950/80 p-8 rounded-2xl border border-zinc-800 text-center flex flex-col justify-center">
+          <div class="w-16 h-16 rounded-full bg-brand-lime/10 border border-brand-lime/30 text-brand-lime flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="award" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-2xl font-black text-white uppercase">Padrão Master</h3>
+          <p class="text-zinc-400 text-xs sm:text-sm mt-2 leading-relaxed">
+            Equipamentos de alta precisão, produtos homologados e o mais alto rigor técnico de São José dos Campos.
+          </p>
+          <div class="mt-6 pt-6 border-t border-zinc-900 text-[11px] text-brand-lime font-bold uppercase tracking-widest">
+            A Diferença Está nos Detalhes
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-zinc-950 border-t border-zinc-900 py-10 text-xs text-zinc-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <p>© Master Detail - Estética Automotiva. Todos os direitos reservados.</p>
+      <div class="flex items-center gap-4">
+        <a href="https://instagram.com/masterdetail_sjc" target="_blank" class="hover:text-brand-lime transition-colors">Instagram Oficial</a>
+        <span>•</span>
+        <a href="https://wa.me/5512981479693" target="_blank" class="hover:text-brand-lime transition-colors">WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= BOTÃO FLUTUANTE WHATSAPP ================= -->
+  <a href="https://wa.me/5512981479693?text=Ol%C3%A1%2C%20estou%20no%20site%20e%20gostaria%20de%20um%20or%C3%A7amento" 
+     target="_blank" 
+     aria-label="Falar no WhatsApp"
+     class="fixed bottom-6 right-6 z-40 bg-brand-lime text-zinc-950 p-4 rounded-full shadow-glow-lime hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group">
+    <i data-lucide="message-circle" class="w-6 h-6"></i>
+    <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out font-black text-xs px-0 group-hover:px-2">
+      Orçamento Online
+    </span>
+  </a>
+
+  <!-- ================= MODAL / LIGHTBOX DE TELA CHEIA ================= -->
+  <div id="imageModal" class="fixed inset-0 bg-black/95 z-50 backdrop-blur-xl hidden opacity-0 transition-all duration-300 flex items-center justify-center p-3 sm:p-6">
+    <button id="closeModal" aria-label="Fechar" class="absolute top-5 right-5 text-zinc-400 hover:text-white bg-zinc-900/90 border border-zinc-800 p-3 rounded-full transition-colors z-50">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+
+    <button id="modalPrev" aria-label="Foto Anterior" class="hidden sm:flex absolute left-6 text-zinc-300 hover:text-white bg-zinc-900/80 border border-zinc-800 p-3 rounded-full hover:bg-brand-lime hover:text-black transition-all z-50">
+      <i data-lucide="chevron-left" class="w-6 h-6"></i>
+    </button>
+    <button id="modalNext" aria-label="Próxima Foto" class="hidden sm:flex absolute right-6 text-zinc-300 hover:text-white bg-zinc-900/80 border border-zinc-800 p-3 rounded-full hover:bg-brand-lime hover:text-black transition-all z-50">
+      <i data-lucide="chevron-right" class="w-6 h-6"></i>
+    </button>
+
+    <div id="modalContainer" class="max-w-5xl w-full flex flex-col items-center transform scale-95 transition-transform duration-300">
+      <div class="relative w-full max-h-[70vh] flex justify-center">
+        <img id="modalImg" src="" alt="" class="max-h-[70vh] max-w-full object-contain rounded-2xl shadow-2xl border border-zinc-800">
+      </div>
+      <div class="text-center mt-5 px-4">
+        <h4 id="modalTitle" class="text-lg sm:text-2xl font-extrabold text-white uppercase tracking-wider"></h4>
+        <p id="modalDesc" class="text-zinc-400 text-xs sm:text-sm mt-2 max-w-2xl mx-auto leading-relaxed"></p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
